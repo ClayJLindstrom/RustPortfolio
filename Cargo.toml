@@ -1,5 +1,5 @@
 [package]
-name = "testGame1"
+name = "RustPortfolio"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 bevy = "0.11.3"
+bevy_xpbd_2d = "0.3.2"
