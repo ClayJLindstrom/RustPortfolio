@@ -2,6 +2,7 @@ use bevy::prelude::*;
 // use bevy::render::render_resource::Texture;
 // use bevy_xpbd_2d::prelude::*; //doesn't work.
 use bevy::app::AppExit;
+use std::f32;
 
 mod rigidbody2d;
 
@@ -112,23 +113,23 @@ fn control_player(
 
         if keyboard.pressed(KeyCode::Right) {
             *player = Direction::Right;
-            transform.rotation = Quat::from_rotation_z(3.14 * 1.5); //works swimmingly!
+            transform.rotation = Quat::from_rotation_z(f32::consts::PI * 1.5); //works swimmingly!
         } else if keyboard.pressed(KeyCode::Down) {
             *player = Direction::Down;
-            transform.rotation = Quat::from_rotation_z(3.14 * 1.); //works swimmingly!
+            transform.rotation = Quat::from_rotation_z(f32::consts::PI * 1.); //works swimmingly!
         } else if keyboard.pressed(KeyCode::Left) {
             *player = Direction::Left;
-            transform.rotation = Quat::from_rotation_z(3.14 * 0.5); //works swimmingly!
+            transform.rotation = Quat::from_rotation_z(f32::consts::PI * 0.5); //works swimmingly!
         } else if keyboard.pressed(KeyCode::Up) {
             *player = Direction::Up;
-            transform.rotation = Quat::from_rotation_z(3.14 * 0.); //works swimmingly!
+            transform.rotation = Quat::from_rotation_z(f32::consts::PI * 0.); //works swimmingly!
         }
     }
 }
 
 //for collision between characters
 fn circle_collision(enemy: Vec3, player: Vec3) -> bool {
-    return enemy.distance(player) < 5.;
+    enemy.distance(player) < 5.
 }
 
 //for handling the rotation of enemies.
@@ -143,25 +144,25 @@ fn enemy_rotation(velocity: (f32, f32)) -> Quat {
             if velocity.1.abs() < velocity.0.abs() * 2.0 {
                 //if x > 0 //up-right
                 if velocity.0 > 0. {
-                    return Quat::from_rotation_z(3.14 * 1.75);
+                    return Quat::from_rotation_z(f32::consts::PI * 1.75);
                 }
                 //else //up-left
-                return Quat::from_rotation_z(3.14 * 0.25);
+                return Quat::from_rotation_z(f32::consts::PI * 0.25);
             }
             //else //faces up
-            return Quat::from_rotation_z(0.);
+            Quat::from_rotation_z(0.)
         } else {
             //if y.abs < x.abs * 2 //it will be diagonal
             if velocity.1.abs() < velocity.0.abs() * 2.0 {
                 //if x > 0 //up-right
                 if velocity.0 > 0. {
-                    return Quat::from_rotation_z(3.14 * 1.25);
+                    return Quat::from_rotation_z(f32::consts::PI * 1.25);
                 }
                 //else //up-left
-                return Quat::from_rotation_z(3.14 * 0.75);
+                return Quat::from_rotation_z(f32::consts::PI * 0.75);
             }
             //else //faces down
-            return Quat::from_rotation_z(3.14 * 1.);
+            Quat::from_rotation_z(f32::consts::PI * 1.)
         }
     } else {
         //if x > 0 //it faces right
@@ -170,25 +171,25 @@ fn enemy_rotation(velocity: (f32, f32)) -> Quat {
             if velocity.0.abs() < velocity.1.abs() * 2.0 {
                 //if y > 0 //up-right
                 if velocity.1 > 0. {
-                    return Quat::from_rotation_z(3.14 * 1.75);
+                    return Quat::from_rotation_z(f32::consts::PI * 1.75);
                 }
                 //else //down-right
-                return Quat::from_rotation_z(3.14 * 1.25);
+                return Quat::from_rotation_z(f32::consts::PI * 1.25);
             }
             //else //faces right
-            return Quat::from_rotation_z(3.14 * 1.5);
+            Quat::from_rotation_z(f32::consts::PI * 1.5)
         } else {
             //if x.abs < y.abs * 2 //it will be diagonal
             if velocity.0.abs() < velocity.1.abs() * 2.0 {
                 //if y > 0 //up-left
                 if velocity.1 > 0. {
-                    return Quat::from_rotation_z(3.14 * 0.25);
+                    return Quat::from_rotation_z(f32::consts::PI * 0.25);
                 }
                 //else //down-left
-                return Quat::from_rotation_z(3.14 * 0.75);
+                return Quat::from_rotation_z(f32::consts::PI * 0.75);
             }
             //else //faces left
-            return Quat::from_rotation_z(3.14 * 0.5);
+            Quat::from_rotation_z(f32::consts::PI * 0.5)
         }
     }
 }
@@ -334,9 +335,18 @@ fn test_collision() {
 #[test]
 fn test_rotation() {
     //if x > 0 //up-right
-    assert_eq!(Quat::from_rotation_z(3.14 * 1.75), enemy_rotation((5., 5.)));
+    assert_eq!(
+        Quat::from_rotation_z(f32::consts::PI * 1.75),
+        enemy_rotation((5., 5.))
+    );
     //else //faces left
-    assert_eq!(Quat::from_rotation_z(3.14 * 0.5), enemy_rotation((-5., 0.)));
+    assert_eq!(
+        Quat::from_rotation_z(f32::consts::PI * 0.5),
+        enemy_rotation((-5., 0.))
+    );
     //faces down
-    assert_eq!(Quat::from_rotation_z(3.14 * 1.), enemy_rotation((0., -5.)));
+    assert_eq!(
+        Quat::from_rotation_z(f32::consts::PI * 1.),
+        enemy_rotation((0., -5.))
+    );
 }
