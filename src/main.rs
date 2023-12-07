@@ -65,8 +65,9 @@ fn add_people(
     asset_server: Res<AssetServer>
 ){
     let range: f32 = 700.0;
-    let localSpeed: f32 = 100.0;
-    let localAccel: f32 = 200.0;
+    let localSpeed: f32 = 50.0 + time.elapsed_seconds();
+    let localAccel: f32 = localSpeed * 2.0 + time.elapsed_seconds()/20.0;
+    // let phaseShift: f32 = 
     // let currentTime: f32 = time.elapsed();
     if time.elapsed_seconds() % 4. <= time.delta_seconds(){
         commands.spawn((
@@ -81,6 +82,7 @@ fn add_people(
                 ..default()
             }
         ));
+        // if(time.elapsed_seconds())
         commands.spawn((
             Enemy{
                 speed: localSpeed,
