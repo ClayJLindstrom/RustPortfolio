@@ -3,14 +3,6 @@
 version = 3
 
 [[package]]
-name = "RustPortfolio"
-version = "0.1.0"
-dependencies = [
- "bevy 0.11.3",
- "bevy_xpbd_2d",
-]
-
-[[package]]
 name = "ab_glyph"
 version = "0.2.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3788,6 +3780,14 @@ dependencies = [
  "bitflags 2.4.0",
  "serde",
  "serde_derive",
+]
+
+[[package]]
+name = "rust_portfolio"
+version = "0.1.0"
+dependencies = [
+ "bevy 0.11.3",
+ "bevy_xpbd_2d",
 ]
 
 [[package]]
